@@ -3,39 +3,43 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pixel Card 💌</title>
+<title>Friend Group Wrapped</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="app">
-    <h1 class="title">PIXEL<br/>CARD</h1>
-    <p class="subtitle">type your name and see what your card says to you</p>
+  <div id="setupScreen" class="screen">
+    <h1 class="brand">FRIEND GROUP<br/>WRAPPED</h1>
+    <p class="tagline">a Spotify-Wrapped style recap for your squad</p>
 
-    <div class="name-form">
-      <input id="nameInput" class="pixel-input" maxlength="18" placeholder="your name" autocomplete="off" />
-      <button id="openBtn" class="pixel-btn">OPEN MY CARD</button>
+    <label class="field-label" for="groupNameInput">Group name</label>
+    <input id="groupNameInput" class="field-input" maxlength="24" placeholder="e.g. The Chaos Crew" />
+
+    <label class="field-label" for="friendNameInput">Add your friends</label>
+    <div class="chip-input-row">
+      <input id="friendNameInput" class="field-input" maxlength="18" placeholder="friend's name" />
+      <button id="addFriendBtn" class="add-btn">ADD</button>
     </div>
+    <div id="friendChips" class="chips"></div>
+    <p id="setupError" class="error hidden">Add at least 2 friends to generate your Wrapped.</p>
 
-    <div id="revealArea" class="layout hidden">
-      <div class="form">
-        <button id="shuffleBtn" class="pixel-btn small">🔀 ANOTHER MESSAGE</button>
+    <button id="generateBtn" class="primary-btn">GENERATE WRAPPED ➔</button>
+  </div>
 
-        <label class="label">Icon:</label>
-        <div id="iconPicker" class="picker"></div>
-
-        <label class="label">Color:</label>
-        <div id="colorPicker" class="picker"></div>
-      </div>
-
-      <div class="preview">
-        <canvas id="cardCanvas" width="200" height="140"></canvas>
-        <button id="downloadBtn" class="pixel-btn">DOWNLOAD CARD</button>
+  <div id="wrappedScreen" class="screen hidden">
+    <div class="phone">
+      <div class="progress-row" id="progressRow"></div>
+      <button id="exitBtn" class="exit-btn">✕</button>
+      <div class="slide-viewport">
+        <div id="slideStage" class="slide"></div>
+        <div class="tap-zone left" id="tapLeft"></div>
+        <div class="tap-zone right" id="tapRight"></div>
       </div>
     </div>
   </div>
 
-  <script src="card.js"></script>
+  <canvas id="recapCanvas" width="300" height="500" class="hidden"></canvas>
+
+  <script src="app.js"></script>
 </body>
 </html>
-
