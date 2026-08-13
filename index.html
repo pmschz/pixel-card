@@ -15,11 +15,29 @@
     <label class="field-label" for="groupNameInput">Group name</label>
     <input id="groupNameInput" class="field-input" maxlength="24" placeholder="e.g. The Chaos Crew" />
 
+    <div class="spotify-box">
+      <button id="connectSpotifyBtn" class="spotify-btn">🎧 CONNECT YOUR SPOTIFY</button>
+      <p class="spotify-hint">Connects on this device — copy your code and send it to whoever's building the group Wrapped.</p>
+    </div>
+    <div id="shareCodeBox" class="share-code-box hidden">
+      <label class="field-label">Your share code — copy &amp; send it</label>
+      <textarea id="shareCodeOutput" class="code-output" readonly></textarea>
+      <button id="copyCodeBtn" class="add-btn">COPY CODE</button>
+    </div>
+    <p id="spotifyError" class="error hidden"></p>
+
     <label class="field-label" for="friendNameInput">Add your friends</label>
     <div class="chip-input-row">
       <input id="friendNameInput" class="field-input" maxlength="18" placeholder="friend's name" />
       <button id="addFriendBtn" class="add-btn">ADD</button>
     </div>
+
+    <label class="field-label" for="friendCodeInput">Got a friend's Spotify code?</label>
+    <div class="chip-input-row">
+      <input id="friendCodeInput" class="field-input" placeholder="paste code here" />
+      <button id="addCodeBtn" class="add-btn">ADD</button>
+    </div>
+
     <div id="friendChips" class="chips"></div>
     <p id="setupError" class="error hidden">Add at least 2 friends to generate your Wrapped.</p>
 

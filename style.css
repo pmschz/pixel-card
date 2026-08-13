@@ -122,6 +122,58 @@ html, body {
   margin: 0;
 }
 
+.spotify-box {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.spotify-btn {
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #1DB954;
+  color: #04210f;
+  cursor: pointer;
+}
+
+.spotify-hint {
+  color: #9a9aa8;
+  font-size: 11px;
+  max-width: 280px;
+  margin: 0;
+}
+
+.share-code-box {
+  width: 280px;
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #16161f;
+  border: 2px solid #1DB954;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.code-output {
+  width: 100%;
+  min-height: 60px;
+  resize: none;
+  font-family: monospace;
+  font-size: 11px;
+  color: #fff;
+  background: #0e0e16;
+  border: 1px solid #2a2a38;
+  border-radius: 8px;
+  padding: 8px;
+}
+
 .primary-btn {
   font-family: inherit;
   font-weight: 900;
