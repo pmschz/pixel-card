@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pixel Card 💌</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <h1 class="title">PIXEL<br/>CARD</h1>
+    <p class="subtitle">make a tiny pixel-art card for a friend</p>
+
+    <div class="layout">
+      <div class="form">
+        <label class="label" for="toInput">To:</label>
+        <input id="toInput" class="pixel-input" maxlength="18" placeholder="friend's name" />
+
+        <label class="label" for="fromInput">From:</label>
+        <input id="fromInput" class="pixel-input" maxlength="18" placeholder="your name (optional)" />
+
+        <label class="label" for="messageInput">Message:</label>
+        <textarea id="messageInput" class="pixel-textarea" maxlength="140" rows="4"></textarea>
+        <button id="shuffleBtn" class="pixel-btn small">🔀 SHUFFLE MESSAGE</button>
+
+        <label class="label">Icon:</label>
+        <div id="iconPicker" class="picker"></div>
+
+        <label class="label">Color:</label>
+        <div id="colorPicker" class="picker"></div>
+      </div>
+
+      <div class="preview">
+        <canvas id="cardCanvas" width="200" height="140"></canvas>
+        <button id="downloadBtn" class="pixel-btn">DOWNLOAD CARD</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="card.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #1b1023;
+  color: #fff2f2;
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  line-height: 1.3;
+  color: #ffd54a;
+  text-shadow: 3px 3px 0 #ff5c8a, 6px 6px 0 #4a2e6b;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 10px;
+  color: #c9b8e8;
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 260px;
+  text-align: left;
+}
+
+.label {
+  font-size: 9px;
+  color: #c9b8e8;
+  margin-top: 6px;
+}
+
+.pixel-input, .pixel-textarea {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 8px;
+  background: #2c1a3d;
+  color: #ffe9a8;
+  border: 4px solid #ffd54a;
+  outline: none;
+  resize: none;
+  width: 100%;
+}
+
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  padding: 12px 18px;
+  background: #ff5c8a;
+  color: #1b1023;
+  border: 4px solid #ffe9a8;
+  box-shadow: 4px 4px 0 #4a2e6b;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #4a2e6b;
+}
+.pixel-btn.small {
+  font-size: 8px;
+  padding: 8px 10px;
+  align-self: flex-start;
+}
+
+.picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  background: #2c1a3d;
+  border: 3px solid #4a2e6b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.icon-btn canvas { image-rendering: pixelated; width: 24px; height: 24px; }
+.icon-btn.selected { border-color: #ffe9a8; box-shadow: 0 0 0 2px #ffd54a; }
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #4a2e6b;
+  cursor: pointer;
+  padding: 0;
+}
+.swatch.selected {
+  border-color: #ffe9a8;
+  box-shadow: 0 0 0 2px #ffd54a;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+#cardCanvas {
+  image-rendering: pixelated;
+  width: 400px;
+  height: 280px;
+  max-width: 88vw;
+  border: 6px solid #ffe9a8;
+  box-shadow: 0 0 0 4px #4a2e6b, 8px 8px 0 rgba(0,0,0,0.4);
+  background: #fff2f2;
+}
