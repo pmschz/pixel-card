@@ -1,4 +1,4 @@
-// ---------- Pixel Card: a tiny virtual card for a friend ----------
+// ---------- Pixel Card: type your name and it says something to you ----------
 
 const MESSAGES = [
   "{name}, your kindness makes the world softer.",
@@ -43,6 +43,7 @@ const SPRITES = {
     "xxxxxxx",
   ],
 };
+const ICON_KEYS = Object.keys(SPRITES);
 
 function drawSprite(ctx, sprite, x, y, size, mainColor, accentColor) {
   for (let row = 0; row < sprite.length; row++) {
@@ -59,10 +60,19 @@ function drawSprite(ctx, sprite, x, y, size, mainColor, accentColor) {
 const COLORS = ["#ff5c8a", "#ffd54a", "#3ecf6e", "#4ad0ff", "#c77dff", "#ff9d3d"];
 const ACCENT = "#ffd54a";
 
+// deterministic hash so the same name always gets the same default look
+function hashName(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
 // ---------- DOM refs ----------
-const toInput = document.getElementById("toInput");
-const fromInput = document.getElementById("fromInput");
-const messageInput = document.getElementById("messageInput");
+const nameInput = document.getElementById("nameInput");
+const openBtn = document.getElementById("openBtn");
+const revealArea = document.getElementById("revealArea");
 const shuffleBtn = document.getElementById("shuffleBtn");
 const iconPicker = document.getElementById("iconPicker");
 const colorPicker = document.getElementById("colorPicker");
@@ -71,13 +81,15 @@ const downloadBtn = document.getElementById("downloadBtn");
 const ctx = cardCanvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
+let currentName = "";
+let currentMessage = "";
 let selectedIcon = "heart";
 let selectedColor = COLORS[0];
 
 // ---------- pickers ----------
 function buildIconPicker() {
   iconPicker.innerHTML = "";
-  Object.keys(SPRITES).forEach((key) => {
+  ICON_KEYS.forEach((key) => {
     const btn = document.createElement("button");
     btn.className = "icon-btn" + (key === selectedIcon ? " selected" : "");
     const mini = document.createElement("canvas");
@@ -98,9 +110,9 @@ function buildIconPicker() {
 
 function buildColorPicker() {
   colorPicker.innerHTML = "";
-  COLORS.forEach((color, i) => {
+  COLORS.forEach((color) => {
     const btn = document.createElement("button");
-    btn.className = "swatch" + (i === 0 ? " selected" : "");
+    btn.className = "swatch" + (color === selectedColor ? " selected" : "");
     btn.style.background = color;
     btn.addEventListener("click", () => {
       selectedColor = color;
@@ -112,15 +124,36 @@ function buildColorPicker() {
   });
 }
 
+function refreshPickerSelection() {
+  [...iconPicker.children].forEach((c, i) => c.classList.toggle("selected", ICON_KEYS[i] === selectedIcon));
+  [...colorPicker.children].forEach((c, i) => c.classList.toggle("selected", COLORS[i] === selectedColor));
+}
+
 // ---------- message ----------
-function randomMessage() {
+function randomMessage(name) {
   const template = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-  const name = toInput.value.trim() || "friend";
   return template.replace("{name}", name);
 }
 
+function revealCard() {
+  currentName = nameInput.value.trim() || "Friend";
+  const hash = hashName(currentName);
+  selectedIcon = ICON_KEYS[hash % ICON_KEYS.length];
+  selectedColor = COLORS[hash % COLORS.length];
+  currentMessage = randomMessage(currentName);
+
+  revealArea.classList.remove("hidden");
+  refreshPickerSelection();
+  renderCard();
+}
+
+openBtn.addEventListener("click", revealCard);
+nameInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") revealCard();
+});
+
 shuffleBtn.addEventListener("click", () => {
-  messageInput.value = randomMessage();
+  currentMessage = randomMessage(currentName || "Friend");
   renderCard();
 });
 
@@ -145,9 +178,8 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 
 function renderCard() {
   const cw = cardCanvas.width, ch = cardCanvas.height;
-  const to = toInput.value.trim() || "Friend";
-  const from = fromInput.value.trim();
-  const message = messageInput.value.trim() || randomMessage();
+  const to = currentName || "Friend";
+  const message = currentMessage || randomMessage(to);
 
   ctx.fillStyle = "#fff2f2";
   ctx.fillRect(0, 0, cw, ch);
@@ -168,26 +200,15 @@ function renderCard() {
   ctx.fillStyle = "#2c1a3d";
   ctx.font = "10px 'Press Start 2P', monospace";
   ctx.textAlign = "center";
-  ctx.fillText(`FOR ${to.toUpperCase()}`, cw / 2, 76);
+  ctx.fillText(`HEY ${to.toUpperCase()}`, cw / 2, 76);
 
   ctx.font = "7px 'Press Start 2P', monospace";
   ctx.fillStyle = "#4a2e6b";
   wrapText(ctx, message, cw / 2, 92, cw - 40, 11);
-
-  if (from) {
-    ctx.font = "7px 'Press Start 2P', monospace";
-    ctx.fillStyle = "#c23a63";
-    ctx.fillText(`- ${from}`, cw / 2, ch - 12);
-  }
 }
 
-// ---------- events ----------
-[toInput, fromInput, messageInput].forEach((el) => {
-  el.addEventListener("input", renderCard);
-});
-
 downloadBtn.addEventListener("click", () => {
-  const to = toInput.value.trim() || "friend";
+  const to = currentName || "friend";
   const link = document.createElement("a");
   link.download = `pixel-card-${to.toLowerCase().replace(/\s+/g, "-")}.png`;
   link.href = cardCanvas.toDataURL("image/png");
@@ -197,5 +218,3 @@ downloadBtn.addEventListener("click", () => {
 // ---------- init ----------
 buildIconPicker();
 buildColorPicker();
-messageInput.value = randomMessage();
-renderCard();

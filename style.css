@@ -34,7 +34,22 @@ html, body {
 .subtitle {
   font-size: 10px;
   color: #c9b8e8;
+  max-width: 320px;
 }
+
+.name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.name-form .pixel-input {
+  width: 240px;
+  text-align: center;
+}
+
+.hidden { display: none !important; }
 
 .layout {
   display: flex;
