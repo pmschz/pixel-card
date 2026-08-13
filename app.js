@@ -2,7 +2,7 @@
 
 // Paste your Spotify Client ID from developer.spotify.com/dashboard (Settings tab). No secret needed — this uses PKCE.
 const SPOTIFY_CLIENT_ID = "f15cad9a26bb442780124758c5569378";
-const SPOTIFY_REDIRECT_URI = window.location.origin + window.location.pathname;
+const SPOTIFY_REDIRECT_URI = "https://pmschz.github.io/pixel-card/";
 const SPOTIFY_SCOPES = "user-top-read";
 
 const SUPERLATIVES = [
