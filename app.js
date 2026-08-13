@@ -201,7 +201,10 @@ async function startSpotifyLogin() {
 
 async function spotifyGet(url, token) {
   const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (!res.ok) throw new Error("spotify api error");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Spotify API ${res.status} on ${url}: ${body}`);
+  }
   return res.json();
 }
 
@@ -238,7 +241,10 @@ async function handleSpotifyCallback() {
         code_verifier: verifier,
       }),
     });
-    if (!tokenRes.ok) throw new Error("token exchange failed");
+    if (!tokenRes.ok) {
+      const body = await tokenRes.text();
+      throw new Error(`Token exchange ${tokenRes.status}: ${body}`);
+    }
     const tokenData = await tokenRes.json();
     const accessToken = tokenData.access_token;
 
@@ -258,7 +264,11 @@ async function handleSpotifyCallback() {
     hideSpotifyError();
     showShareCode(encodeShareCode(shareData));
   } catch (err) {
-    showSpotifyError("Something went wrong fetching your Spotify data. Try connecting again.");
+    console.error("Spotify connect failed:", err);
+    const hint = err.message.includes("403")
+      ? " (your Spotify app is likely in Development Mode — add this Spotify account under Settings > User Management in the dashboard)"
+      : "";
+    showSpotifyError(`Something went wrong: ${err.message}${hint}`);
   }
 }
 
